@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/hanna-tuomi/hanna-tuomi.github.io/static/css/main.073c9b0a.css",
+    "main.js": "/hanna-tuomi/hanna-tuomi.github.io/static/js/main.7cbe2d5b.js",
+    "static/js/787.f188b15a.chunk.js": "/hanna-tuomi/hanna-tuomi.github.io/static/js/787.f188b15a.chunk.js",
+    "static/media/logo.svg": "/hanna-tuomi/hanna-tuomi.github.io/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "index.html": "/hanna-tuomi/hanna-tuomi.github.io/index.html",
+    "main.073c9b0a.css.map": "/hanna-tuomi/hanna-tuomi.github.io/static/css/main.073c9b0a.css.map",
+    "main.7cbe2d5b.js.map": "/hanna-tuomi/hanna-tuomi.github.io/static/js/main.7cbe2d5b.js.map",
+    "787.f188b15a.chunk.js.map": "/hanna-tuomi/hanna-tuomi.github.io/static/js/787.f188b15a.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.073c9b0a.css",
+    "static/js/main.7cbe2d5b.js"
+  ]
+}
