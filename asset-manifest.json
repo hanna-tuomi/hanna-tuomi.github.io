@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/hanna-tuomi/hanna-tuomi.github.io/static/css/main.2c7a9320.css",
-    "main.js": "/hanna-tuomi/hanna-tuomi.github.io/static/js/main.11c0336c.js",
-    "static/js/787.f188b15a.chunk.js": "/hanna-tuomi/hanna-tuomi.github.io/static/js/787.f188b15a.chunk.js",
-    "static/media/headshot.jpg": "/hanna-tuomi/hanna-tuomi.github.io/static/media/headshot.8639764f78c0c1a477a2.jpg",
-    "static/media/sunset_background.jpg": "/hanna-tuomi/hanna-tuomi.github.io/static/media/sunset_background.fc761e657d32f98156ed.jpg",
-    "index.html": "/hanna-tuomi/hanna-tuomi.github.io/index.html",
-    "main.2c7a9320.css.map": "/hanna-tuomi/hanna-tuomi.github.io/static/css/main.2c7a9320.css.map",
-    "main.11c0336c.js.map": "/hanna-tuomi/hanna-tuomi.github.io/static/js/main.11c0336c.js.map",
-    "787.f188b15a.chunk.js.map": "/hanna-tuomi/hanna-tuomi.github.io/static/js/787.f188b15a.chunk.js.map"
+    "main.css": "/hanna-tuomi.github.io/static/css/main.2c7a9320.css",
+    "main.js": "/hanna-tuomi.github.io/static/js/main.9f5fb9a2.js",
+    "static/js/787.f188b15a.chunk.js": "/hanna-tuomi.github.io/static/js/787.f188b15a.chunk.js",
+    "static/media/headshot.jpg": "/hanna-tuomi.github.io/static/media/headshot.8639764f78c0c1a477a2.jpg",
+    "static/media/sunset_background.jpg": "/hanna-tuomi.github.io/static/media/sunset_background.fc761e657d32f98156ed.jpg",
+    "index.html": "/hanna-tuomi.github.io/index.html",
+    "main.2c7a9320.css.map": "/hanna-tuomi.github.io/static/css/main.2c7a9320.css.map",
+    "main.9f5fb9a2.js.map": "/hanna-tuomi.github.io/static/js/main.9f5fb9a2.js.map",
+    "787.f188b15a.chunk.js.map": "/hanna-tuomi.github.io/static/js/787.f188b15a.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.2c7a9320.css",
-    "static/js/main.11c0336c.js"
+    "static/js/main.9f5fb9a2.js"
   ]
 }
