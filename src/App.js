@@ -1,22 +1,14 @@
-import logo from './logo.svg';
+import background from './sunset_background.jpg';
 import './App.css';
 
 function App() {
   return (
-    <div className="App">
+    <div className="App" style={{backgroundImage: `url(${background})`}}>
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+        <img src={require('./headshot.jpg')} alt="headshot" style={{width:"20vw"}} />
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          Hanna Tuomi
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
       </header>
     </div>
   );
