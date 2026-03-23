@@ -1,41 +1,3 @@
-// This code is a simple interface to the Dark Sky API.
-// It handles retrieving new data from .json files included in
-// a sketch, or live data for a latitude/longitude via a server.
-
-// Updated 2021-03-18 to add requestForecast() function to update
-// the weather, and requestForecast('gps') to use GPS location.
-// It also adds callbacks for weather loading and errors.
-
-// Usage:
-// requestWeather(42.3596764, -71.0958358);  // MIT
-// requestWeather('data.json');  // read from a file
-// requestWeather('gps');  // current GPS location
-
-// Also possible to do with a callback:
-// requestWeather('gps', function() {
-//   ...do something here when the weather is updated
-// });
-
-// Or a second callback that handles errors:
-// requestWeather('gps', function() {
-//   ...do something here when the weather is updated
-// }, function(errorMessage) {
-//   console.error(errorMessage);  // print the message to the console
-// });
-
-// These functions wrap what's available in the API, but advanced users who
-// understand how JSON objects work can access the information directly
-// via the 'data' field:
-//
-// w = requestWeather();
-// if (w.ready) {
-//   console.log(w.data);  // print the JSON object as returned by the API
-//   conosole.log(w.hourly);  // same as w.data.hourly, but here as a convenience
-// }
-
-// The Dark Sky docs page is now unavailable, but you can still read it here:
-// https://web.archive.org/web/20200402135354/https://darksky.net/dev/docs
-
 function requestWeather() {
   "use strict";
 
@@ -240,23 +202,57 @@ function requestWeather() {
       return outgoing;
     }
 
+function wmoToIcon(code, isDay) {
+  if (code === 0) return isDay ? 'clear-day' : 'clear-night';
+  if (code <= 2) return isDay ? 'partly-cloudy-day' : 'partly-cloudy-night';
+  if (code === 3) return 'cloudy';
+  if (code <= 49) return 'fog';
+  if (code <= 67) return 'rain';
+  if (code <= 77) return 'snow';
+  if (code <= 82) return 'rain';
+  if (code <= 86) return 'snow';
+  if (code <= 99) return 'rain';
+  return isDay ? 'clear-day' : 'clear-night';
+}
 
-    function loadCallback(data) {
-      //console.log('got load');
-      self.data = data;  // keep a copy of the original
+function loadCallback(data) {
+  self.data = data;
 
-      self.currently = data.currently;
-      self.minutely = data.minutely;
-      self.hourly = data.hourly;
-      self.daily = data.daily;
-      self.flags = data.flags;  // not really needed
-
-      self.ready = true;
-
-      if (userLoadCallback != null) {
-        userLoadCallback(self);
-      }
+  // map Open-Meteo current conditions to Dark Sky-style "currently" object
+  let now = new Date();
+  let startIdx = 0;
+  for (let i = 0; i < data.hourly.time.length; i++) {
+    if (new Date(data.hourly.time[i]) >= now) {
+      startIdx = i;
+      break;
     }
+  }
+
+  self.currently = {
+    temperature: data.current.temperature_2m,
+    cloudCover: data.current.cloudcover / 100,
+    precipProbability: (data.current.precipitation_probability || 0) / 100,
+    windSpeed: data.current.windspeed_10m,
+    windBearing: data.current.winddirection_10m,
+    humidity: data.current.relativehumidity_2m / 100,
+    icon: wmoToIcon(data.current.weathercode, data.current.is_day)
+  };
+
+  // map hourly arrays into Dark Sky-style { data: [...] } format
+  self.hourly = {
+    data: data.hourly.time.slice(startIdx, startIdx + 12).map((t, i) => ({
+      time: new Date(t).getTime() / 1000,
+      temperature: data.hourly.temperature_2m[startIdx + i],
+      precipProbability: data.hourly.precipitation_probability[startIdx + i] / 100,
+      cloudCover: data.hourly.cloudcover[startIdx + i] / 100
+    }))
+  };
+
+  self.ready = true;
+  if (userLoadCallback != null) {
+    userLoadCallback(self);
+  }
+}
 
 
     function errorCallback(response) {
@@ -317,14 +313,8 @@ function requestWeather() {
       } else if (args.length === 2) {
         let lat = args[0];
         let lon = args[1];
-        // By default, we route requests to a server that caches requests when
-        // talking to the Dark Sky API. This prevents everyone from needing to
-        // sign up for an API key (which, as of 2021 is no longer possible anyway),
-        // and it also helps insulate folks from errors. For instance, if you
-        // accidentally put requestWeather() in draw(), you'll use up your 1,000
-        // API calls per day very quickly. (Because draw() runs at 60 times a second,
-        // you'll get to 1,000 in less than 17 seconds.)
-        let url = "https://weathergirls.fathom.info/course/" + lat + "," + lon;
+        // use the open-meteo api
+        let url = "https://api.open-meteo.com/v1/forecast?latitude=" + lat + "&longitude=" + lon + "&current=temperature_2m,weathercode,cloudcover,precipitation_probability,windspeed_10m,winddirection_10m,relativehumidity_2m,is_day&hourly=temperature_2m,precipitation_probability,cloudcover&temperature_unit=fahrenheit&windspeed_unit=mph&timezone=auto";
         console.log('Loading weather from ' + url);
         loadJSON(url, loadCallback);
 
